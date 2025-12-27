@@ -14,15 +14,21 @@ from playwright.sync_api import sync_playwright, TimeoutError
 
 class WeirdhostLogin:
     def __init__(self):
-        """初始化，从环境变量读取配置"""
+        """初始化，本地测试直接设置认证信息，GitHub Actions 时用环境变量"""
         self.url = os.getenv('WEIRDHOST_URL', 'https://hub.weirdhost.xyz')
         self.server_urls = os.getenv('WEIRDHOST_SERVER_URLS', '')
         self.login_url = os.getenv('WEIRDHOST_LOGIN_URL', 'https://hub.weirdhost.xyz/auth/login')
         
-        # 获取认证信息
-        self.remember_web_cookie = os.getenv('REMEMBER_WEB_COOKIE', '_ga=GA1.1.251850168.1766765892; _ga_BG7WFHCBZV=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; _ga_Z7QV29771G=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; cf_clearance=ej_H0lcqp98sA09CHZ7xoU5g3tINf.PjVHTbA7G9qKw-1766803635-1.2.1.1-4TPy3luvVR2j0nOQovTwm38QTzxarv_IHVHFrWyYJiRzFYyoOBUpen.MZHjqOenJUxrky6oT3xhk_Fju93.F6ld1mlrUjTmsgWgRHfKOqYfv3HNih6a.Yvucg7UPx9BFyGnSqQ1gXrCZ6tO1aVsMzXkk680UX.gLaJirmG4DwiQ1gbr_kajBfSS1O9nj7tl0dPuaue1PmHUyhBkVfxUDRJI1BzdVb.jlVQdKuWSv_E8; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6IlA3OTZSeFFwTzBLSCt0cHZ4aHNNeUE9PSIsInZhbHVlIjoiLzRLNUZZUUt5VmhYd3UvZFAvbEtmSnhFNUQ0Z1Z3V0IzMStScGpHMGFFdHJjdGxsTG54Yko4cnMxOCtpNXk1dGdvRUV3YmFDdndrQUIrWjRscDl3WUNwWVkzVlZsbm1zVi9sajRITUVJcE93US9KQzc4b1pKWldIekVUUTIzYlRaU0MrazhGdWtpQVU4djdVSHRZT3lTTzNOOEIzdkgrRm4zNHRiVnpabk9IRHVHTXlkYjJtakd4SE5kZVpDTkcvL003djJjR0l4eGxzVmdlNXVkbGgrY3hBTkI1YzkyWmpQWU44RE1wMHQ1dz0iLCJtYWMiOiIzMWYwZWM0NjJmZGRmMGU2MTM3N2ZmZmM3ZTM1NzgzOGIzOWZjYzFjYzQwY2FjZWJjYjBjZmI3YWNhYmQwNWI4IiwidGFnIjoiIn0%3D; XSRF-TOKEN=eyJpdiI6IjdWclRBbWV4VTA4NmtOZXcyR0xiemc9PSIsInZhbHVlIjoiM3hzaDdhMHdUelluWjBmRWg3a2lzS1MrRFNzUTlWbUt0WWVvaWxYektmYWNDTEEwWjh3RTAyRTNpampoZ3UxWFlVWExqd2VCYmJQNzQ4QlZ0anhFUmNFa1lZeitSZTIycEVxMHFtNHBrYWQvQ25ZQ2ptYnJaQzRNMzhjNjdISVEiLCJtYWMiOiI1MmMzYjU3MDAwMjY1MTRhMzJiOGFlYmY5YTU3MDU4NzYzODljN2IzZmZlZTFlZWNiMDNjOGVkNTVjYjliNzI2IiwidGFnIjoiIn0%3D; pterodactyl_session=eyJpdiI6IkF1L2J6TVVtT2Y0V01ETG9qNEJWOFE9PSIsInZhbHVlIjoiMEt3Nlo0R2EzTUNxdG1UTDZuRUhOS1UrRzB5UDZlZ1duUzgwWTE1S3ZUUVRhb1k2aFd6SzVnZ0JBN3RKQkNuSWxCY0JUbmFxOVdZR2E2WDZPcXZieURGRmRKd1JUbjZkUnoyVHpRKzNYbmE2YlU3Q3lWc1gwNHh4eTdkWDN0OUwiLCJtYWMiOiI3M2Q5MjhiZWU5NTY5ZGQ4NmNmZTlmMDE0ZWJhYjkxZGUwNGFjNGE4NDRiZDVjOTRlZjRmZWY4ZjI2ZmYxYmZmIiwidGFnIjoiIn0%3D')
-        self.email = os.getenv('WEIRDHOST_EMAIL', '83370667@qq.com')
-        self.password = os.getenv('WEIRDHOST_PASSWORD', '@Ab19910917')
+        # ========== 修复点1：本地测试直接赋值（优先），GitHub Actions 用环境变量 ==========
+        # 本地测试时，直接用下面的硬编码值；GitHub Actions 时，注释掉硬编码，用 os.getenv 读取
+        self.remember_web_cookie = '_ga=GA1.1.251850168.1766765892; _ga_BG7WFHCBZV=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; _ga_Z7QV29771G=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; cf_clearance=ej_H0lcqp98sA09CHZ7xoU5g3tINf.PjVHTbA7G9qKw-1766803635-1.2.1.1-4TPy3luvVR2j0nOQovTwm38QTzxarv_IHVHFrWyYJiRzFYyoOBUpen.MZHjqOenJUxrky6oT3xhk_Fju93.F6ld1mlrUjTmsgWgRHfKOqYfv3HNih6a.Yvucg7UPx9BFyGnSqQ1gXrCZ6tO1aVsMzXkk680UX.gLaJirmG4DwiQ1gbr_kajBfSS1O9nj7tl0dPuaue1PmHUyhBkVfxUDRJI1BzdVb.jlVQdKuWSv_E8; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6IlA3OTZSeFFwTzBLSCt0cHZ4aHNNeUE9PSIsInZhbHVlIjoiLzRLNUZZUUt5VmhYd3UvZFAvbEtmSnhFNUQ0Z1Z3V0IzMStScGpHMGFFdHJjdGxsTG54Yko4cnMxOCtpNXk1dGdvRUV3YmFDdndrQUIrWjRscDl3WUNwWVkzVlZsbm1zVi9sajRITUVJcE93US9KQzc4b1pKWldIekVUUTIzYlRaU0MrazhGdWtpQVU4djdVSHRZT3lTTzNOOEIzdkgrRm4zNHRiVnpabk9IRHVHTXlkYjJtakd4SE5kZVpDTkcvL003djJjR0l4eGxzVmdlNXVkbGgrY3hBTkI1YzkyWmpQWU44RE1wMHQ1dz0iLCJtYWMiOiIzMWYwZWM0NjJmZGRmMGU2MTM3N2ZmZmM3ZTM1NzgzOGIzOWZjYzFjYzQwY2FjZWJjYjBjZmI3YWNhYmQwNWI4IiwidGFnIjoiIn0%3D; XSRF-TOKEN=eyJpdiI6IjdWclRBbWV4VTA4NmtOZXcyR0xiemc9PSIsInZhbHVlIjoiM3hzaDdhMHdUelluWjBmRWg3a2lzS1MrRFNzUTlWbUt0WWVvaWxYektmYWNDTEEwWjh3RTAyRTNpampoZ3UxWFlVWExqd2VCYmJQNzQ4QlZ0anhFUmNFa1lZeitSZTIycEVxMHFtNHBrYWQvQ25ZQ2ptYnJaQzRNMzhjNjdISVEiLCJtYWMiOiI1MmMzYjU3MDAwMjY1MTRhMzJiOGFlYmY5YTU3MDU4NzYzODljN2IzZmZlZTFlZWNiMDNjOGVkNTVjYjliNzI2IiwidGFnIjoiIn0%3D; pterodactyl_session=eyJpdiI6IkF1L2J6TVVtT2Y0V01ETG9qNEJWOFE9PSIsInZhbHVlIjoiMEt3Nlo0R2EzTUNxdG1UTDZuRUhOS1UrRzB5UDZlZ1duUzgwWTE1S3ZUUVRhb1k2aFd6SzVnZ0JBN3RKQkNuSWxCY0JUbmFxOVdZR2E2WDZPcXZieURGRmRKd1JUbjZkUnoyVHpRKzNYbmE2YlU3Q3lWc1gwNHh4eTdkWDN0OUwiLCJtYWMiOiI3M2Q5MjhiZWU5NTY5ZGQ4NmNmZTlmMDE0ZWJhYjkxZGUwNGFjNGE4NDRiZDVjOTRlZjRmZWY4ZjI2ZmYxYmZmIiwidGFnIjoiIn0%3D'
+        self.email = '83370667@qq.com'
+        self.password = '@Ab19910917'
+        
+        # GitHub Actions 时启用下面3行，注释上面的硬编码
+        # self.remember_web_cookie = os.getenv('REMEMBER_WEB_COOKIE', '')
+        # self.email = os.getenv('WEIRDHOST_EMAIL', '')
+        # self.password = os.getenv('WEIRDHOST_PASSWORD', '')
         
         # 浏览器配置
         self.headless = os.getenv('HEADLESS', 'true').lower() == 'true'
@@ -37,13 +43,14 @@ class WeirdhostLogin:
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         print(f"[{timestamp}] {level}: {message}")
     
+    # ========== 修复点2：增强认证检查逻辑，排除空字符串/全空格 ==========
     def has_cookie_auth(self):
-        """检查是否有 cookie 认证信息"""
-        return bool(self.remember_web_cookie)
+        """检查是否有 cookie 认证信息（排除空字符串/全空格）"""
+        return bool(self.remember_web_cookie and self.remember_web_cookie.strip())
     
     def has_email_auth(self):
-        """检查是否有邮箱密码认证信息"""
-        return bool(self.email and self.password)
+        """检查是否有邮箱密码认证信息（排除空字符串/全空格）"""
+        return bool(self.email and self.email.strip() and self.password and self.password.strip())
     
     def check_login_status(self, page):
         """检查是否已登录"""
@@ -67,20 +74,27 @@ class WeirdhostLogin:
         try:
             self.log("尝试使用 Cookies 登录...")
             
-            # 创建cookie
-            session_cookie = {
-                'name': 'remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d',
-                'value': self.remember_web_cookie,
-                'domain': 'hub.weirdhost.xyz',
-                'path': '/',
-                'expires': int(time.time()) + 3600 * 24 * 365,
-                'httpOnly': True,
-                'secure': True,
-                'sameSite': 'Lax'
-            }
+            # 修复：拆分Cookie字符串，逐个添加（原代码只加了remember_web_*，漏掉了其他必要Cookie）
+            cookie_parts = self.remember_web_cookie.split(';')
+            for part in cookie_parts:
+                part = part.strip()
+                if '=' in part:
+                    name, value = part.split('=', 1)
+                    if name and value:
+                        session_cookie = {
+                            'name': name,
+                            'value': value,
+                            'domain': 'hub.weirdhost.xyz',
+                            'path': '/',
+                            'expires': int(time.time()) + 3600 * 24 * 365,
+                            'httpOnly': name.startswith('remember_web_') or name.startswith('pterodactyl_session'),
+                            'secure': True,
+                            'sameSite': 'Lax'
+                        }
+                        context.add_cookies([session_cookie])
+                        self.log(f"已添加 Cookie: {name}")
             
-            context.add_cookies([session_cookie])
-            self.log("已添加 remember_web cookie")
+            self.log("已添加所有 Cookie")
             return True
                 
         except Exception as e:
@@ -525,6 +539,12 @@ def main():
         print("\n推荐使用 Cookie 认证，更稳定可靠")
         sys.exit(1)
     
+    # ========== 修复点3：设置服务器URL（本地测试时手动填） ==========
+    # 本地测试时，手动设置服务器URL列表（替换成你的实际URL）
+    if not login.server_list:
+        # 示例：login.server_list = ["https://hub.weirdhost.xyz/server/你的服务器ID1", "https://hub.weirdhost.xyz/server/你的服务器ID2"]
+        login.server_list = ["https://hub.weirdhost.xyz/server/你的服务器ID"]  # 替换成你的实际服务器URL
+    
     # 检查服务器URL列表
     if not login.server_list:
         print("❌ 错误：未设置服务器URL列表！")
@@ -555,4 +575,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
