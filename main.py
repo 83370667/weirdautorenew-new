@@ -543,7 +543,7 @@ def main():
     # 本地测试时，手动设置服务器URL列表（替换成你的实际URL）
     if not login.server_list:
         # 示例：login.server_list = ["https://hub.weirdhost.xyz/server/你的服务器ID1", "https://hub.weirdhost.xyz/server/你的服务器ID2"]
-        login.server_list = ["https://hub.weirdhost.xyz/server/你的服务器ID"]  # 替换成你的实际服务器URL
+        login.server_list = ["https://hub.weirdhost.xyz/server/f9545392", "https://hub.weirdhost.xyz/server/7f08392b"]  # 替换成你的实际服务器URL
     
     # 检查服务器URL列表
     if not login.server_list:
@@ -575,3 +575,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
