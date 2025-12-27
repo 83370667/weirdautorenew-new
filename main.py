@@ -20,9 +20,9 @@ class WeirdhostLogin:
         self.login_url = os.getenv('WEIRDHOST_LOGIN_URL', 'https://hub.weirdhost.xyz/auth/login')
         
         # 获取认证信息
-        self.remember_web_cookie = os.getenv('REMEMBER_WEB_COOKIE', '')
-        self.email = os.getenv('WEIRDHOST_EMAIL', '')
-        self.password = os.getenv('WEIRDHOST_PASSWORD', '')
+        self.remember_web_cookie = os.getenv('REMEMBER_WEB_COOKIE', '_ga=GA1.1.251850168.1766765892; _ga_BG7WFHCBZV=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; _ga_Z7QV29771G=GS2.1.s1766765892$o1$g1$t1766766345$j60$l0$h0; cf_clearance=ej_H0lcqp98sA09CHZ7xoU5g3tINf.PjVHTbA7G9qKw-1766803635-1.2.1.1-4TPy3luvVR2j0nOQovTwm38QTzxarv_IHVHFrWyYJiRzFYyoOBUpen.MZHjqOenJUxrky6oT3xhk_Fju93.F6ld1mlrUjTmsgWgRHfKOqYfv3HNih6a.Yvucg7UPx9BFyGnSqQ1gXrCZ6tO1aVsMzXkk680UX.gLaJirmG4DwiQ1gbr_kajBfSS1O9nj7tl0dPuaue1PmHUyhBkVfxUDRJI1BzdVb.jlVQdKuWSv_E8; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6IlA3OTZSeFFwTzBLSCt0cHZ4aHNNeUE9PSIsInZhbHVlIjoiLzRLNUZZUUt5VmhYd3UvZFAvbEtmSnhFNUQ0Z1Z3V0IzMStScGpHMGFFdHJjdGxsTG54Yko4cnMxOCtpNXk1dGdvRUV3YmFDdndrQUIrWjRscDl3WUNwWVkzVlZsbm1zVi9sajRITUVJcE93US9KQzc4b1pKWldIekVUUTIzYlRaU0MrazhGdWtpQVU4djdVSHRZT3lTTzNOOEIzdkgrRm4zNHRiVnpabk9IRHVHTXlkYjJtakd4SE5kZVpDTkcvL003djJjR0l4eGxzVmdlNXVkbGgrY3hBTkI1YzkyWmpQWU44RE1wMHQ1dz0iLCJtYWMiOiIzMWYwZWM0NjJmZGRmMGU2MTM3N2ZmZmM3ZTM1NzgzOGIzOWZjYzFjYzQwY2FjZWJjYjBjZmI3YWNhYmQwNWI4IiwidGFnIjoiIn0%3D; XSRF-TOKEN=eyJpdiI6IjdWclRBbWV4VTA4NmtOZXcyR0xiemc9PSIsInZhbHVlIjoiM3hzaDdhMHdUelluWjBmRWg3a2lzS1MrRFNzUTlWbUt0WWVvaWxYektmYWNDTEEwWjh3RTAyRTNpampoZ3UxWFlVWExqd2VCYmJQNzQ4QlZ0anhFUmNFa1lZeitSZTIycEVxMHFtNHBrYWQvQ25ZQ2ptYnJaQzRNMzhjNjdISVEiLCJtYWMiOiI1MmMzYjU3MDAwMjY1MTRhMzJiOGFlYmY5YTU3MDU4NzYzODljN2IzZmZlZTFlZWNiMDNjOGVkNTVjYjliNzI2IiwidGFnIjoiIn0%3D; pterodactyl_session=eyJpdiI6IkF1L2J6TVVtT2Y0V01ETG9qNEJWOFE9PSIsInZhbHVlIjoiMEt3Nlo0R2EzTUNxdG1UTDZuRUhOS1UrRzB5UDZlZ1duUzgwWTE1S3ZUUVRhb1k2aFd6SzVnZ0JBN3RKQkNuSWxCY0JUbmFxOVdZR2E2WDZPcXZieURGRmRKd1JUbjZkUnoyVHpRKzNYbmE2YlU3Q3lWc1gwNHh4eTdkWDN0OUwiLCJtYWMiOiI3M2Q5MjhiZWU5NTY5ZGQ4NmNmZTlmMDE0ZWJhYjkxZGUwNGFjNGE4NDRiZDVjOTRlZjRmZWY4ZjI2ZmYxYmZmIiwidGFnIjoiIn0%3D')
+        self.email = os.getenv('WEIRDHOST_EMAIL', '83370667@qq.com')
+        self.password = os.getenv('WEIRDHOST_PASSWORD', '@Ab19910917')
         
         # 浏览器配置
         self.headless = os.getenv('HEADLESS', 'true').lower() == 'true'
@@ -555,3 +555,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
